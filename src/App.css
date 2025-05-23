@@ -1,0 +1,103 @@
+/* Container header-ului */
+.App-header {
+  background: linear-gradient(90deg, #c85aec, #e781f5);
+  padding: 2rem 1rem;
+  max-width: 700px;
+  margin: 2rem auto; 
+  border-radius: 15px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  user-select: none;
+}
+
+
+.App-header h1 {
+  margin: 0;
+  font-weight: 900;
+  font-size: 2.8rem;
+  color: #730786; 
+  text-align: center;
+}
+
+
+/* Container quiz */
+.bg-white {
+  background-color: white;
+  border-radius: 15px;
+  padding: 2rem;
+  max-width: 700px;
+  margin: 2rem auto;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+  display: flex;
+  flex-direction: column;
+}
+
+/* Titlu întrebare */
+h2 {
+  color: #440462;
+  margin-bottom: 2rem;
+  font-size: 2rem;
+  font-weight: 500;
+  text-align: left;
+}
+
+/* Container butoane */
+.bg-white > div.space-y-2 {
+  width: 100%;
+  max-width: 400px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+/* Stil butoane răspuns */
+button {
+  background-color: #ae37ee;
+  border: none;
+  color: white;
+  padding: 10px 20px;
+  font-size: 1.0rem;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  width: 100%;
+  box-shadow: 0 4px 8px rgba(195, 5, 220, 0.4);
+  font-weight: 600;
+}
+
+
+button:hover {
+  background-color: #730786;
+}
+
+
+.answer-button {
+  margin: 2rem auto 0;
+  max-width: 400px;
+  display: block;
+  text-align: center;
+}
+
+/* Responsive (mobil) */
+@media (max-width: 480px) {
+  .App-header {
+    font-size: 2rem;
+  }
+
+  h2 {
+    font-size: 1.6rem;
+  }
+
+  button {
+    font-size: 1.1rem;
+    padding: 14px 20px;
+  }
+
+  .bg-white > div.space-y-2 {
+    max-width: 100%;
+  }
+}
