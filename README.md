@@ -1,49 +1,58 @@
-Link video ñ prezentare proiect: https://youtu.be/zTMGr9kD1_Y?si=wYr0gCOJsiWnI07N 
+Link video ‚Äì prezentare proiect: https://youtu.be/zTMGr9kD1_Y?si=wYr0gCOJsiWnI07N 
 Link publicare: https://dancequiz.vercel.app/ 
 Link GitHub: https://github.com/AndraSima/Dance 
 
 1. Introducere
-Proiectul Dance Style Quiz este o aplica?ie web interactiv? dezvoltat? Ón React, care ofer? utilizatorilor o recomandare personalizat? de stil de dans pe baza unui quiz. R?spunsurile colectate sunt trimise c?tre un model de limbaj AI (OpenAI ChatGPT), iar pe baza r?spunsului generat, aplica?ia caut? automat videoclipuri relevante pe YouTube folosind API-ul YouTube Data.
+Proiectul Dance Style Quiz este o aplicatie web interactiva dezvoltata √Æn React, care ofera utilizatorilor o recomandare personalizata de stil de dans pe baza unui quiz. Raspunsurile colectate sunt trimise catre un model de limbaj AI (OpenAI ChatGPT), iar pe baza raspunsului generat, aplicatia cauta automat videoclipuri relevante pe YouTube folosind API-ul YouTube Data.
 2. Descrierea problemei
-Tot mai mul?i oameni Ó?i doresc s? Ónceap? s? danseze atunci c‚nd dansul este v?zut nu doar ca o form? de divertisment sau o form? de art?, ci ?i ca un mijloc eficient de relaxare, terapie ?i exprimare personal?. Totu?i, alegerea unui stil de dans potrivit este o provocare frecvent? dac? nu ai un ghid personalizat sau o descriere clar? a op?iunilor disponibile.
-De?i mul?i utilizatori se confrunt? cu Óntreb?ri precum: ÑMi s-ar potrivi mai bine un stil dinamic, precum hip-hop-ul, sau unul elegant, precum tango-ul?î, nu au un cadru accesibil Ón care s? ob?in? o recomandare pe baza personalit??ii, nivelului lor de energie sau preferin?elor lor muzicale. Aceast? alegere poate fi descurajant? sau aleatorie Ón lipsa unei Óndrum?ri interactive.
+Tot mai multi oameni √Æsi doresc sa √Ænceapa sa danseze atunci c√¢nd dansul este vazut nu doar ca o forma de divertisment sau o forma de arta, ci si ca un mijloc eficient de relaxare, terapie si exprimare personala. Totusi, alegerea unui stil de dans potrivit este o provocare frecventa daca nu ai un ghid personalizat sau o descriere clara a optiunilor disponibile.
+Desi multi utilizatori se confrunta cu √Æntrebari precum: ‚ÄûMi s-ar potrivi mai bine un stil dinamic, precum hip-hop-ul, sau unul elegant, precum tango-ul?‚Äù, nu au un cadru accesibil √Æn care sa obtina o recomandare pe baza personalitatii, nivelului lor de energie sau preferintelor lor muzicale. Aceasta alegere poate fi descurajanta sau aleatorie √Æn lipsa unei √Ændrumari interactive.
 
-Aplica?ia propus? vine Ón Ónt‚mpinarea acestei nevoi printr-o solu?ie inteligent? ?i accesibil?: un quiz interactiv care, prin analiza AI a r?spunsurilor oferite, identific? stilul de dans care se potrive?te cel mai bine fiec?rui utilizator. Œn plus, aplica?ia faciliteaz? Ónv??area ?i explorarea stilului sugerat prin furnizarea resurselor video relevante, care sunt automat extrase de pe YouTube. Prin urmare, problema este abordat? nu numai prin furnizarea unui r?spuns individualizat, ci ?i prin furnizarea de instruc?iuni precise pentru urm?torii pa?i, ceea ce face ca tranzi?ia de la interes la ac?iune s? fie c‚t mai natural posibil.
+Aplicatia propusa vine √Æn √Ænt√¢mpinarea acestei nevoi printr-o solutie inteligenta si accesibila: un quiz interactiv care, prin analiza AI a raspunsurilor oferite, identifica stilul de dans care se potriveste cel mai bine fiecarui utilizator. √én plus, aplicatia faciliteaza √Ænvatarea si explorarea stilului sugerat prin furnizarea resurselor video relevante, care sunt automat extrase de pe YouTube. Prin urmare, problema este abordata nu numai prin furnizarea unui raspuns individualizat, ci si prin furnizarea de instructiuni precise pentru urmatorii pasi, ceea ce face ca tranzitia de la interes la actiune sa fie c√¢t mai natural posibil.
 3. Descriere API 
 a) OpenAI API (GPT-3.5 Turbo):
 - Endpoint: https://api.openai.com/v1/chat/completions 
-- Metod?: POST
+- Metoda: POST
 - Autentificare: Bearer Token
 - Exemplu de utilizare:
+- ![image](https://github.com/user-attachments/assets/8dd77b93-0255-471a-a599-5c81b07702ca)
+
 b) YouTube Data API v3:
 - Endpoint: https://www.googleapis.com/youtube/v3/search 
-- Metod?: GET
+- Metoda: GET
 - Autentificare: API Key
 - Exemplu de utilizare:
+- ![image](https://github.com/user-attachments/assets/d8dc915c-5a94-452e-a3af-15a19076f4df)
+
 
 4. Flux de date
-Procesul de interac?iune cu Dance Style Quiz este structurat, u?or de Ón?eles ?i fluent, cu un flux de date clar definit Óntre componentele aplica?iei ?i serviciile cloud utilizate (OpenAI ?i YouTube). Mai jos este o descriere detaliat? a modului Ón care datele sunt transferate prin aplica?ie:
+Procesul de interactiune cu Dance Style Quiz este structurat, usor de √Ænteles si fluent, cu un flux de date clar definit √Æntre componentele aplicatiei si serviciile cloud utilizate (OpenAI si YouTube). Mai jos este o descriere detaliata a modului √Æn care datele sunt transferate prin aplicatie:
 > Completarea quiz-ului (Quiz.js)
-La deschiderea aplica?iei, utilizatorul este Ónt‚mpinat de o interfa?? prietenoas?, unde poate Óncepe un quiz compus dintr-o serie de Óntreb?ri referitoare la stilul s?u de via??, preferin?ele muzicale, nivelul de energie ?i obiceiurile sale legate de activitate fizic?. Aceste Óntreb?ri sunt definite Óntr-un array de obiecte Ón fi?ierul Quiz.js, fiecare av‚nd op?iuni multiple de r?spuns. Pe m?sur? ce utilizatorul r?spunde, selec?iile sale sunt salvate Óntr-un array local numit answers, prin func?ia setAnswers(newAnswers).
-> Trimiterea datelor c?tre OpenAI
-Odat? ce toate Óntreb?rile au fost completate, array-ul de r?spunsuri (answers) este concatenat Óntr-un string care este folosit drept prompt pentru un apel c?tre API-ul OpenAI (modelul gpt-3.5-turbo). Acest prompt este trimis Óntr-o cerere POST, cu un mesaj formulat astfel Ónc‚t s? solicite modelului identificarea unui singur stil de dans potrivit utilizatorului, Ón func?ie de totalitatea r?spunsurilor. Apelul este realizat prin intermediul bibliotecii Axios, cu autentificare pe baz? de token stocat Ón variabila de mediu REACT_APP_OPENAI_KEY.
+La deschiderea aplicatiei, utilizatorul este √Ænt√¢mpinat de o interfata prietenoasa, unde poate √Æncepe un quiz compus dintr-o serie de √Æntrebari referitoare la stilul sau de viata, preferintele muzicale, nivelul de energie si obiceiurile sale legate de activitate fizica. Aceste √Æntrebari sunt definite √Æntr-un array de obiecte √Æn fisierul Quiz.js, fiecare av√¢nd optiuni multiple de raspuns. Pe masura ce utilizatorul raspunde, selectiile sale sunt salvate √Æntr-un array local numit answers, prin functia setAnswers(newAnswers).
+> Trimiterea datelor catre OpenAI
+Odata ce toate √Æntrebarile au fost completate, array-ul de raspunsuri (answers) este concatenat √Æntr-un string care este folosit drept prompt pentru un apel catre API-ul OpenAI (modelul gpt-3.5-turbo). Acest prompt este trimis √Æntr-o cerere POST, cu un mesaj formulat astfel √Ænc√¢t sa solicite modelului identificarea unui singur stil de dans potrivit utilizatorului, √Æn functie de totalitatea raspunsurilor. Apelul este realizat prin intermediul bibliotecii Axios, cu autentificare pe baza de token stocat √Æn variabila de mediu REACT_APP_OPENAI_KEY.
+![image](https://github.com/user-attachments/assets/24f23839-174d-4d23-baba-738d799e6247)
 
-> Primirea r?spunsului de la OpenAI ?i stocarea rezultatului
-R?spunsul primit de la OpenAI este un text simplu (ex: ÑSalsaî), care este extras din obiectul response.data.choices[0].message.content ?i trimis mai departe c?tre componenta principal? a aplica?iei prin func?ia onResult(style). Aceasta seteaz? starea result din componenta App.js cu stilul de dans recomandat.
-> C?utarea de videoclipuri YouTube (Result.js)
-Odat? identificat stilul de dans, aplica?ia trece automat la componenta Result.js, unde stilul returnat este utilizat pentru a construi o interogare (query) c?tre API-ul YouTube Data v3. Se genereaz? o c?utare automat? de tipul "dance tutorial" (ex: "salsa dance tutorial"), iar rezultatele sunt ob?inute printr-un apel GET cu Axios. R?spunsul con?ine o list? de videoclipuri (obiecte items), din care se extrag titlurile ?i ID-urile pentru a fi afi?ate Óntr-un player embedded YouTube.
+> Primirea raspunsului de la OpenAI si stocarea rezultatului
+Raspunsul primit de la OpenAI este un text simplu (ex: ‚ÄûSalsa‚Äù), care este extras din obiectul response.data.choices[0].message.content si trimis mai departe catre componenta principala a aplicatiei prin functia onResult(style). Aceasta seteaza starea result din componenta App.js cu stilul de dans recomandat.
+> Cautarea de videoclipuri YouTube (Result.js)
+Odata identificat stilul de dans, aplicatia trece automat la componenta Result.js, unde stilul returnat este utilizat pentru a construi o interogare (query) catre API-ul YouTube Data v3. Se genereaza o cautare automata de tipul "dance tutorial" (ex: "salsa dance tutorial"), iar rezultatele sunt obtinute printr-un apel GET cu Axios. Raspunsul contine o lista de videoclipuri (obiecte items), din care se extrag titlurile si ID-urile pentru a fi afisate √Æntr-un player embedded YouTube.
+![image](https://github.com/user-attachments/assets/c9687b1c-219b-45c9-b45a-bf7fb4e3a45e)
 
-> Afi?area rezultatelor ?i posibilitatea de a relua testul
-Utilizatorului i se afi?eaz? titlul stilului de dans recomandat ?i o serie de videoclipuri relevante, toate Ón cadrul unei interfe?e atractive ?i responsive: setVideos(res.data.items). La finalul paginii, exist? un buton ÑReia testulî, care reseteaz? starea aplica?iei (setResult(null)) ?i permite reluarea procesului de la Ónceput, Ón caz c? utilizatorul dore?te s? ob?in? un rezultat diferit sau s? reconsidere r?spunsurile.
-> Autentificare ?i autorizare servicii utilizate:
-- OpenAI: Bearer Token Ón header-ul Authorization
-- YouTube Data API: API Key Ón query string
-- Datele de autentificare sunt ascunse Ón fi?ierul `.env` ?i accesate prin `process.env.REACT_APP_...`
-Acest flux de date asigur? o experien?? fluid?, bazat? pe procesarea inteligent? a informa?iilor ?i livrarea de con?inut personalizat, integr‚nd perfect capabilit??ile a dou? servicii cloud majore: OpenAI (pentru analiz? ?i decizie logic?) ?i YouTube (pentru furnizarea de con?inut multimedia adaptat contextului).
-5. Capturi ecran aplica?ie
+> Afisarea rezultatelor si posibilitatea de a relua testul
+Utilizatorului i se afiseaza titlul stilului de dans recomandat si o serie de videoclipuri relevante, toate √Æn cadrul unei interfete atractive si responsive: setVideos(res.data.items). La finalul paginii, exista un buton ‚ÄûReia testul‚Äù, care reseteaza starea aplicatiei (setResult(null)) si permite reluarea procesului de la √Ænceput, √Æn caz ca utilizatorul doreste sa obtina un rezultat diferit sau sa reconsidere raspunsurile.
+> Autentificare si autorizare servicii utilizate:
+- OpenAI: Bearer Token √Æn header-ul Authorization
+- YouTube Data API: API Key √Æn query string
+- Datele de autentificare sunt ascunse √Æn fisierul `.env` si accesate prin `process.env.REACT_APP_...`
+Acest flux de date asigura o experienta fluida, bazata pe procesarea inteligenta a informatiilor si livrarea de continut personalizat, integr√¢nd perfect capabilitatile a doua servicii cloud majore: OpenAI (pentru analiza si decizie logica) si YouTube (pentru furnizarea de continut multimedia adaptat contextului).
+5. Capturi ecran aplicatie
+![image](https://github.com/user-attachments/assets/3783ed7b-bcf6-41a8-a8ac-66e3a3186089)
+![image](https://github.com/user-attachments/assets/2fa615e9-252a-434b-a082-2f66c726ed32)
+![image](https://github.com/user-attachments/assets/fe7682e5-9d7f-455a-b45d-93ef09dfba9f)
 
 
-6. Referin?e
+6. Referinte
 https://react.dev/learn 
 https://nextjs.org/docs 
 https://platform.openai.com/docs/concepts 
