@@ -66,3 +66,5 @@ function Quiz({ onResult }) {
 }
 
 export default Quiz;
+
+
