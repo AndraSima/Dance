@@ -1,70 +1,52 @@
-# Getting Started with Create React App
+Link video – prezentare proiect: https://youtu.be/zTMGr9kD1_Y?si=wYr0gCOJsiWnI07N 
+Link publicare: https://dancequiz.vercel.app/ 
+Link GitHub: https://github.com/AndraSima/Dance 
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+1. Introducere
+Proiectul Dance Style Quiz este o aplica?ie web interactiv? dezvoltat? în React, care ofer? utilizatorilor o recomandare personalizat? de stil de dans pe baza unui quiz. R?spunsurile colectate sunt trimise c?tre un model de limbaj AI (OpenAI ChatGPT), iar pe baza r?spunsului generat, aplica?ia caut? automat videoclipuri relevante pe YouTube folosind API-ul YouTube Data.
+2. Descrierea problemei
+Tot mai mul?i oameni î?i doresc s? înceap? s? danseze atunci când dansul este v?zut nu doar ca o form? de divertisment sau o form? de art?, ci ?i ca un mijloc eficient de relaxare, terapie ?i exprimare personal?. Totu?i, alegerea unui stil de dans potrivit este o provocare frecvent? dac? nu ai un ghid personalizat sau o descriere clar? a op?iunilor disponibile.
+De?i mul?i utilizatori se confrunt? cu întreb?ri precum: „Mi s-ar potrivi mai bine un stil dinamic, precum hip-hop-ul, sau unul elegant, precum tango-ul?”, nu au un cadru accesibil în care s? ob?in? o recomandare pe baza personalit??ii, nivelului lor de energie sau preferin?elor lor muzicale. Aceast? alegere poate fi descurajant? sau aleatorie în lipsa unei îndrum?ri interactive.
 
-## Available Scripts
+Aplica?ia propus? vine în întâmpinarea acestei nevoi printr-o solu?ie inteligent? ?i accesibil?: un quiz interactiv care, prin analiza AI a r?spunsurilor oferite, identific? stilul de dans care se potrive?te cel mai bine fiec?rui utilizator. În plus, aplica?ia faciliteaz? înv??area ?i explorarea stilului sugerat prin furnizarea resurselor video relevante, care sunt automat extrase de pe YouTube. Prin urmare, problema este abordat? nu numai prin furnizarea unui r?spuns individualizat, ci ?i prin furnizarea de instruc?iuni precise pentru urm?torii pa?i, ceea ce face ca tranzi?ia de la interes la ac?iune s? fie cât mai natural posibil.
+3. Descriere API 
+a) OpenAI API (GPT-3.5 Turbo):
+- Endpoint: https://api.openai.com/v1/chat/completions 
+- Metod?: POST
+- Autentificare: Bearer Token
+- Exemplu de utilizare:
+b) YouTube Data API v3:
+- Endpoint: https://www.googleapis.com/youtube/v3/search 
+- Metod?: GET
+- Autentificare: API Key
+- Exemplu de utilizare:
 
-In the project directory, you can run:
+4. Flux de date
+Procesul de interac?iune cu Dance Style Quiz este structurat, u?or de în?eles ?i fluent, cu un flux de date clar definit între componentele aplica?iei ?i serviciile cloud utilizate (OpenAI ?i YouTube). Mai jos este o descriere detaliat? a modului în care datele sunt transferate prin aplica?ie:
+> Completarea quiz-ului (Quiz.js)
+La deschiderea aplica?iei, utilizatorul este întâmpinat de o interfa?? prietenoas?, unde poate începe un quiz compus dintr-o serie de întreb?ri referitoare la stilul s?u de via??, preferin?ele muzicale, nivelul de energie ?i obiceiurile sale legate de activitate fizic?. Aceste întreb?ri sunt definite într-un array de obiecte în fi?ierul Quiz.js, fiecare având op?iuni multiple de r?spuns. Pe m?sur? ce utilizatorul r?spunde, selec?iile sale sunt salvate într-un array local numit answers, prin func?ia setAnswers(newAnswers).
+> Trimiterea datelor c?tre OpenAI
+Odat? ce toate întreb?rile au fost completate, array-ul de r?spunsuri (answers) este concatenat într-un string care este folosit drept prompt pentru un apel c?tre API-ul OpenAI (modelul gpt-3.5-turbo). Acest prompt este trimis într-o cerere POST, cu un mesaj formulat astfel încât s? solicite modelului identificarea unui singur stil de dans potrivit utilizatorului, în func?ie de totalitatea r?spunsurilor. Apelul este realizat prin intermediul bibliotecii Axios, cu autentificare pe baz? de token stocat în variabila de mediu REACT_APP_OPENAI_KEY.
 
-### `npm start`
+> Primirea r?spunsului de la OpenAI ?i stocarea rezultatului
+R?spunsul primit de la OpenAI este un text simplu (ex: „Salsa”), care este extras din obiectul response.data.choices[0].message.content ?i trimis mai departe c?tre componenta principal? a aplica?iei prin func?ia onResult(style). Aceasta seteaz? starea result din componenta App.js cu stilul de dans recomandat.
+> C?utarea de videoclipuri YouTube (Result.js)
+Odat? identificat stilul de dans, aplica?ia trece automat la componenta Result.js, unde stilul returnat este utilizat pentru a construi o interogare (query) c?tre API-ul YouTube Data v3. Se genereaz? o c?utare automat? de tipul "dance tutorial" (ex: "salsa dance tutorial"), iar rezultatele sunt ob?inute printr-un apel GET cu Axios. R?spunsul con?ine o list? de videoclipuri (obiecte items), din care se extrag titlurile ?i ID-urile pentru a fi afi?ate într-un player embedded YouTube.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+> Afi?area rezultatelor ?i posibilitatea de a relua testul
+Utilizatorului i se afi?eaz? titlul stilului de dans recomandat ?i o serie de videoclipuri relevante, toate în cadrul unei interfe?e atractive ?i responsive: setVideos(res.data.items). La finalul paginii, exist? un buton „Reia testul”, care reseteaz? starea aplica?iei (setResult(null)) ?i permite reluarea procesului de la început, în caz c? utilizatorul dore?te s? ob?in? un rezultat diferit sau s? reconsidere r?spunsurile.
+> Autentificare ?i autorizare servicii utilizate:
+- OpenAI: Bearer Token în header-ul Authorization
+- YouTube Data API: API Key în query string
+- Datele de autentificare sunt ascunse în fi?ierul `.env` ?i accesate prin `process.env.REACT_APP_...`
+Acest flux de date asigur? o experien?? fluid?, bazat? pe procesarea inteligent? a informa?iilor ?i livrarea de con?inut personalizat, integrând perfect capabilit??ile a dou? servicii cloud majore: OpenAI (pentru analiz? ?i decizie logic?) ?i YouTube (pentru furnizarea de con?inut multimedia adaptat contextului).
+5. Capturi ecran aplica?ie
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
 
-### `npm test`
+6. Referin?e
+https://react.dev/learn 
+https://nextjs.org/docs 
+https://platform.openai.com/docs/concepts 
+https://learning.postman.com/docs/getting-started/first-steps/sending-the-first-request/ 
+https://vercel.com/ 
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `npm run build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
